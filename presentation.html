@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhD Admission Presentation — Md Estihad Faysal</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #050505;
+  --stage: #111110;
+  --rail: #070707;
+  --panel: #1b1a17;
+  --panel-strong: #201f1b;
+  --text: #f7f4ec;
+  --text-dim: #c9bea7;
+  --muted: #827b6c;
+  --accent: #ffc400;
+  --accent2: #ff7a3d;
+  --accent3: #2dd4bf;
+  --gold: #ffc400;
+  --border: #302d25;
+  --card-bg: #181713;
+  --tag-bg: #242118;
+  --rail-w: 216px;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  background: var(--bg);
+}
+
+.thumb-rail {
+  position: relative;
+  z-index: 120;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 10px 10px 28px 0;
+  background: var(--rail);
+  border-right: 1px solid #211f1b;
+}
+
+.thumb-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 0;
+  align-items: start;
+  padding: 0 10px 10px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.thumb-index {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1;
+  padding-top: 12px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.thumb-preview {
+  display: flex;
+  min-height: 88px;
+  aspect-ratio: 16 / 9;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 9px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: #12110f;
+  box-shadow: inset 0 0 0 1px #24221d;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.thumb-item:hover .thumb-preview {
+  border-color: #5f5745;
+  background: #171612;
+}
+
+.thumb-item.active .thumb-index {
+  color: var(--text);
+}
+
+.thumb-item.active .thumb-preview {
+  border-color: var(--accent2);
+  background: #181510;
+}
+
+.thumb-kicker {
+  color: var(--accent);
+  font-size: 0.45rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.thumb-title {
+  display: -webkit-box;
+  margin-top: 6px;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1.05;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.thumb-lines {
+  display: grid;
+  gap: 3px;
+  margin-top: 7px;
+}
+
+.thumb-line {
+  display: block;
+  height: 3px;
+  border-radius: 10px;
+  background: #3b362c;
+}
+
+.thumb-line:nth-child(1) { width: 88%; }
+.thumb-line:nth-child(2) { width: 74%; }
+.thumb-line:nth-child(3) { width: 55%; }
+
+.stage {
+  position: relative;
+  min-width: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--stage);
+}
+
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, #050505 0, transparent 46px),
+    linear-gradient(0deg, #050505 0, transparent 54px);
+  z-index: 2;
+}
+
+.slides-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 58px 92px 58px;
+  opacity: 0;
+  transform: translateX(34px);
+  transition: opacity 0.34s ease, transform 0.34s ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.slide.exit-left {
+  opacity: 0;
+  transform: translateX(-34px);
+}
+
+.slide.exit-right {
+  opacity: 0;
+  transform: translateX(34px);
+}
+
+.slide::after {
+  content: attr(data-page);
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  color: #555044;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.slide-inner {
+  width: 100%;
+  max-width: 1240px;
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+/* Slide types */
+.slide-title {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.slide-title h1 {
+  max-width: 1120px;
+  margin: 18px 0 28px;
+  color: var(--text);
+  font-size: 6.4rem;
+  font-weight: 950;
+  line-height: 0.93;
+}
+
+.slide-title h1 .accent-word {
+  color: var(--accent);
+}
+
+.slide-title .subtitle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-dim);
+  font-size: 1.28rem;
+  font-weight: 800;
+}
+
+.slide-title .subtitle::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.slide-title .name {
+  margin-top: 60px;
+  color: var(--text-dim);
+  font-size: 1rem;
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.slide-title .meta {
+  max-width: 980px;
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.slide-section h2 {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 2.18rem;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.slide-section .slide-divider {
+  width: 68px;
+  height: 4px;
+  margin: 0 0 24px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* Agenda */
+.agenda-list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+
+.agenda-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg) !important;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.agenda-num {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #070707;
+  font-weight: 900;
+}
+
+/* Profile */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.info-card,
+.card,
+.rq-card,
+.reason-item,
+.timeline-item,
+.stat-pill,
+.contrib-list li {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+}
+
+.info-card {
+  padding: 20px 22px;
+}
+
+.info-card h4 {
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 7px 0;
+  border-bottom: 1px solid #29261f;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.info-item:last-child {
+  border-bottom: 0;
+}
+
+.info-item span:first-child {
+  color: var(--muted);
+}
+
+.lang-table {
+  width: 100%;
+  margin-top: 8px;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.lang-table th,
+.pub-table th {
+  padding: 9px 8px;
+  border-bottom: 2px solid var(--border);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.lang-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 9px;
+  padding: 11px 15px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: 20px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px #2a2616;
+}
+
+.timeline-item .year {
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.timeline-item .desc {
+  margin-top: 3px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.timeline-item .detail {
+  margin-top: 2px;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+/* Cards */
+.card {
+  margin-bottom: 12px;
+  padding: 18px 20px;
+}
+
+.card h3 {
+  margin-bottom: 11px;
+  color: var(--accent);
+  font-size: 1.05rem;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.card p,
+.card li {
+  color: var(--text-dim);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.card ul {
+  list-style: none;
+}
+
+.card ul li::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 10px 2px 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Skills matrix */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.skill-tag {
+  display: inline-block;
+  margin: 3px;
+  padding: 5px 9px;
+  border: 1px solid #3f3825;
+  border-radius: 4px;
+  background: var(--tag-bg);
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+/* Publication table */
+.pub-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  font-size: 0.84rem;
+}
+
+.pub-table td {
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+  vertical-align: top;
+}
+
+.pub-table tr:hover td {
+  background: #201d15;
+}
+
+/* Architecture diagram proxy */
+.arch-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.arch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.arch-box {
+  min-width: 140px;
+  padding: 10px 14px;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px;
+  background: var(--card-bg) !important;
+  color: var(--text);
+  font-size: 0.83rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.arch-box.blue { color: var(--text); }
+.arch-box.purple { color: var(--accent); }
+.arch-box.pink { color: var(--accent3); }
+.arch-box.gold { color: var(--accent); }
+
+.arch-arrow {
+  color: var(--muted);
+  font-size: 1.35rem;
+  text-align: center;
+}
+
+.arch-layer {
+  width: 100%;
+  max-width: 740px;
+  padding: 10px 14px;
+  border: 1px dashed #665c3e !important;
+  border-radius: 6px;
+  color: var(--text-dim) !important;
+  background: #151410;
+  font-size: 0.84rem;
+  text-align: center;
+}
+
+/* Evidence screenshots */
+.evidence-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.evidence-card {
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+}
+
+.shot-link {
+  position: relative;
+  display: block;
+  height: 100%;
+  min-height: 330px;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.browser-shot {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.92) contrast(1.04);
+}
+
+.shot-link::after {
+  content: "Open in new tab";
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 7px 10px;
+  border: 1px solid #574d31;
+  border-radius: 4px;
+  background: rgba(7, 7, 7, 0.82);
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 9px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+}
+
+.work-card h3 {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.work-card p,
+.work-card li {
+  color: var(--text-dim);
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.work-card ul {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+}
+
+.work-card li::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 9px 2px 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.paper-link {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 8px 11px;
+  border: 1px solid #574d31;
+  border-radius: 4px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.research-evidence-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.research-evidence-grid .stat-row {
+  justify-content: flex-start;
+}
+
+.research-evidence-grid .stat-pill {
+  min-width: 110px;
+  padding: 12px 14px;
+}
+
+.research-evidence-grid .stat-pill .num {
+  font-size: 2rem;
+}
+
+.research-evidence-grid .stat-pill .label {
+  font-size: 0.76rem;
+}
+
+.research-evidence-grid .pub-table {
+  margin-top: 14px;
+}
+
+.research-shot {
+  min-height: 430px;
+}
+
+.awards-culture-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.culture-photo-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+}
+
+.culture-photo {
+  width: 100%;
+  height: 310px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.98) contrast(1.04);
+}
+
+.culture-caption {
+  padding: 15px 17px 17px;
+  border-top: 1px solid var(--border);
+}
+
+.culture-caption strong {
+  display: block;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.culture-caption span {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-dim);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.awards-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.awards-stack .card {
+  margin-bottom: 0;
+}
+
+/* Stat pills */
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+.stat-pill {
+  min-width: 170px;
+  padding: 17px 24px;
+  text-align: center;
+}
+
+.stat-pill .num {
+  color: var(--accent);
+  background: none;
+  font-size: 2.35rem;
+  font-weight: 950;
+  line-height: 1;
+  -webkit-text-fill-color: currentColor;
+}
+
+.stat-pill .label {
+  margin-top: 6px;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+/* Research questions */
+.rq-card {
+  margin-bottom: 13px;
+  padding: 19px 21px;
+  border-left: 4px solid var(--accent) !important;
+}
+
+.rq-card h3 {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.rq-card p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* Contrib list */
+.contrib-list {
+  display: grid;
+  gap: 9px;
+  list-style: none;
+}
+
+.contrib-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 16px;
+}
+
+.contrib-num {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #070707;
+  font-size: 0.86rem;
+  font-weight: 950;
+}
+
+.contrib-list li p {
+  flex: 1;
+  color: var(--text-dim);
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.year-grid .card {
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.year-grid .card h3 {
+  font-size: 0.96rem;
+}
+
+.year-grid .card li {
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+
+/* Closing */
+.closing-reasons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.reason-item {
+  padding: 18px;
+  text-align: left;
+}
+
+.reason-item .icon {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.reason-item p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* Navigation */
+.nav-controls {
+  position: fixed;
+  right: 28px;
+  bottom: 21px;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: #161511;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.18s ease;
+}
+
+.nav-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #070707;
+}
+
+.nav-btn:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.nav-btn:disabled:hover {
+  border-color: var(--border);
+  background: #161511;
+  color: var(--text-dim);
+}
+
+.slide-counter {
+  min-width: 70px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  text-align: center;
+  user-select: none;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: var(--rail-w);
+  z-index: 130;
+  width: calc(100% - var(--rail-w));
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s ease;
+}
+
+.fullscreen-hint {
+  position: fixed;
+  top: 18px;
+  right: 30px;
+  z-index: 110;
+  color: var(--muted);
+  font-size: 0.72rem;
+  opacity: 0.9;
+}
+
+.deck-footer {
+  position: fixed;
+  left: calc(var(--rail-w) + 92px);
+  right: 142px;
+  bottom: 26px;
+  z-index: 110;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.research-problem-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 455px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+}
+
+.research-problem-visual img {
+  width: 100%;
+  height: 455px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.96) contrast(1.05);
+}
+
+.research-problem-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.05), rgba(5, 5, 5, 0.66));
+  pointer-events: none;
+}
+
+.visual-pill {
+  position: absolute;
+  z-index: 2;
+  bottom: 18px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 196, 0, 0.38);
+  border-radius: 6px;
+  background: rgba(7, 7, 7, 0.78);
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  backdrop-filter: blur(8px);
+}
+
+.visual-pill strong {
+  display: block;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.visual-pill.problem {
+  left: 18px;
+  max-width: 42%;
+}
+
+.visual-pill.solution {
+  right: 18px;
+  max-width: 45%;
+}
+
+.solution-target-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.architecture-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #f6f7fb;
+}
+
+.architecture-card img {
+  width: 100%;
+  height: 455px;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  background: #f6f7fb;
+}
+
+.target-panel,
+.innovation-panel {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+}
+
+.target-panel h3,
+.innovation-panel h3 {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.target-metric-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.target-metric {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #11100d;
+}
+
+.target-metric strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.target-metric span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.innovation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.innovation-panel {
+  min-height: 150px;
+}
+
+.innovation-panel p {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 0.86rem;
+  line-height: 1.43;
+}
+
+.innovation-lead {
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  border: 1px solid #4d4329;
+  border-radius: 6px;
+  background: #15130e;
+  color: var(--text-dim);
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.innovation-lead b {
+  color: var(--accent);
+}
+
+/* Scrollbar */
+.thumb-rail::-webkit-scrollbar,
+.slide-inner::-webkit-scrollbar {
+  width: 6px;
+}
+
+.thumb-rail::-webkit-scrollbar-track,
+.slide-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thumb-rail::-webkit-scrollbar-thumb,
+.slide-inner::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: #3b382f;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  :root { --rail-w: 184px; }
+  .slide { padding: 62px 62px 64px; }
+  .slide-title h1 { font-size: 5rem; }
+  .deck-footer { left: calc(var(--rail-w) + 62px); }
+}
+
+@media (max-width: 900px) {
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) 130px;
+  }
+
+  .thumb-rail {
+    grid-row: 2;
+    height: 130px;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px 10px;
+    border-top: 1px solid #211f1b;
+    border-right: 0;
+  }
+
+  .thumb-item {
+    width: 154px;
+    min-width: 154px;
+    grid-template-columns: 22px 1fr;
+    padding-bottom: 0;
+  }
+
+  .stage {
+    grid-row: 1;
+    height: calc(100vh - 130px);
+  }
+
+  .progress-bar {
+    left: 0;
+    width: 100%;
+  }
+
+  .slide {
+    padding: 52px 28px 66px;
+  }
+
+  .slide-title h1 {
+    font-size: 3.1rem;
+  }
+
+  .slide-section h2 {
+    font-size: 1.55rem;
+  }
+
+  .profile-grid,
+  .skills-grid,
+  .closing-reasons,
+  .year-grid,
+  .evidence-grid,
+  .research-evidence-grid,
+  .awards-culture-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shot-link,
+  .research-shot {
+    min-height: 260px;
+  }
+
+  .culture-photo {
+    height: 230px;
+  }
+
+  .solution-target-grid,
+  .innovation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .research-problem-visual,
+  .research-problem-visual img,
+  .architecture-card img {
+    min-height: 0;
+    height: 260px;
+  }
+
+  .visual-pill {
+    position: static;
+    display: block;
+    max-width: none !important;
+    margin: 8px;
+  }
+
+  .deck-footer {
+    left: 28px;
+    right: 118px;
+    bottom: 20px;
+    font-size: 0.72rem;
+  }
+
+  .fullscreen-hint {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="progress-bar" id="progressBar"></div>
+
+  <aside class="thumb-rail" id="thumbRail" aria-label="Slide thumbnails"></aside>
+
+  <main class="stage">
+    <div class="fullscreen-hint">Press <b>F</b> for fullscreen &nbsp;|&nbsp; Arrow keys to navigate</div>
+
+    <div class="slides-container" id="slidesContainer"></div>
+
+    <div class="deck-footer">
+      <span>Md Estihad Faysal</span>
+      <span>PhD Admission Interview &middot; <span id="footerCounter">1 / 17</span></span>
+    </div>
+
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" title="Previous (Left Arrow)">&#8592;</button>
+      <span class="slide-counter" id="slideCounter">1 / 17</span>
+      <button class="nav-btn" id="nextBtn" title="Next (Right Arrow)">&#8594;</button>
+    </div>
+  </main>
+</div>
+
+<script>
+(function() {
+  const SLIDES = [
+    {
+      type: 'title',
+      html: `
+        <div class="slide-inner slide-title">
+          <div class="subtitle">PhD Admission Interview</div>
+          <h1>Remote Sensing <br>&amp; <span class="accent-word">Surveying</span></h1>
+          <div class="name">Md Estihad Faysal</div>
+          <div class="meta">MEng, Computer Science &amp; Technology</div>
+          <div class="meta">Henan Polytechnic University, China</div>
+          <div class="meta" style="margin-top:24px; color:var(--text-dim)">Interview Presentation</div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Presentation Outline</h2>
+          <div class="slide-divider"></div>
+          <ul class="agenda-list">
+            <li><span class="agenda-num">1</span>Personal &amp; Academic Background</li>
+            <li><span class="agenda-num">2</span>Research Achievements &amp; Technical Skills</li>
+            <li><span class="agenda-num">3</span>From Multiagentic AI to Geospatial Intelligence</li>
+            <li><span class="agenda-num">4</span>Proposed PhD Research Plan</li>
+            <li><span class="agenda-num">5</span>Timeline &amp; Expected Contributions</li>
+            <li><span class="agenda-num">6</span>Q&amp;A</li>
+          </ul>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Personal Profile</h2>
+          <div class="slide-divider"></div>
+          <div class="profile-grid">
+            <div class="info-card">
+              <h4>Basic Information</h4>
+              <div class="info-item"><span>Nationality</span><span>Bangladeshi</span></div>
+              <div class="info-item"><span>Hometown</span><span>Gaibandha (Palashbari)</span></div>
+              <div class="info-item"><span>In China Since</span><span>2018 (8 years)</span></div>
+              <div class="info-item"><span>Current City</span><span>Jiaozuo, Henan</span></div>
+              <div class="info-item" style="margin-top:8px;"><span>Email</span><span style="color:var(--accent)">aihe1524@gmail.com</span></div>
+              <div class="info-item"><span>WeChat</span><span style="color:var(--accent)">aihe_</span></div>
+            </div>
+            <div class="info-card">
+              <h4>Language Proficiency (CEFR)</h4>
+              <table class="lang-table">
+                <tr><th>Language</th><th>Listening</th><th>Speaking</th><th>Writing</th></tr>
+                <tr><td style="color:var(--accent)">Bangla</td><td>Native</td><td>Native</td><td>Native</td></tr>
+                <tr><td style="color:var(--accent)">English</td><td>C2</td><td>C2</td><td>C2</td></tr>
+                <tr><td style="color:var(--accent)">Chinese</td><td>C1</td><td>C1</td><td>B2</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Academic Journey</h2>
+          <div class="slide-divider"></div>
+          <div class="timeline">
+            <div class="timeline-item"><div class="year">2013 – 2015</div><div class="desc">Secondary School Certificate (SSC) — Science</div><div class="detail">Bogra Cantonment Public School, Bangladesh</div></div>
+            <div class="timeline-item"><div class="year">2015 – 2017</div><div class="desc">Higher Secondary Certificate (HSC) — Science</div><div class="detail">Gohail Islamia High School & College, Bangladesh &middot; GPA: 4.08 / 5.00</div></div>
+            <div class="timeline-item"><div class="year">2018 – 2022</div><div class="desc">Bachelor's in Computer Science &amp; Technology</div><div class="detail">Henan Polytechnic University &middot; Thesis: SDN Routing Optimization</div></div>
+            <div class="timeline-item"><div class="year">2023 – 2025</div><div class="desc">Master's in Computer Science &amp; Technology</div><div class="detail">Henan Polytechnic University &middot; Thesis: Multi-Agent AI for E-Commerce</div></div>
+            <div class="timeline-item" style="border-color: var(--accent);"><div class="year">2026 &rarr;</div><div class="desc">PhD in Remote Sensing &amp; Surveying</div><div class="detail">Henan Polytechnic University</div></div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Bachelor's Thesis (2022)</h2>
+          <div class="slide-divider"></div>
+          <div class="card" style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(129,140,248,0.08)); border-color: rgba(129,140,248,0.3);">
+            <h3 style="font-size:1.2rem;">An Advanced Routing Optimization Model towards Software Defined Networking (SDN)</h3>
+            <ul style="margin-top:12px;">
+              <li>Dynamic network topology management</li>
+              <li>Centralized control-plane routing algorithms</li>
+              <li>Latency and throughput optimization</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Relevance to PhD</h3>
+            <ul>
+              <li>Network optimization for distributed sensor systems</li>
+              <li>Real-time data routing from satellite ground stations</li>
+              <li>Foundation for edge-cloud data pipelines</li>
+            </ul>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Master's Thesis Publication</h2>
+          <div class="slide-divider"></div>
+          <div class="evidence-grid">
+            <div class="evidence-card">
+              <a class="shot-link" href="https://jocsai.com/index.php/jcsai/article/view/133" target="_blank" rel="noopener noreferrer" aria-label="Open published master's paper in a new tab">
+                <img class="browser-shot" src="assets/masters-paper-jcsai.png" alt="Screenshot of published JCSAI article: Agentic Commerce">
+              </a>
+            </div>
+            <div class="work-card">
+              <h3>Agentic Commerce: A Unified Multi-Retrieval Framework for High-Fidelity E-Commerce Chatbots</h3>
+              <p><b style="color:var(--text);">JCSAI, Vol. 5 No. 3 (2025)</b><br>Published: 28 Jan 2026 &middot; First author: Md Estihad Faysal</p>
+              <ul>
+                <li>Designed a multi-agent e-commerce chatbot framework for product search, retrieval, reasoning, and action support.</li>
+                <li>Integrated RAG for grounded product and policy knowledge with Chain-of-Thought style reasoning for structured answers.</li>
+                <li>Focused on reducing hallucinations, improving multi-turn coherence, and supporting real customer-service tasks.</li>
+                <li>Connected the master's thesis work to publishable research on agentic AI, conversational commerce, and chatbot evaluation.</li>
+              </ul>
+              <a class="paper-link" href="https://jocsai.com/index.php/jcsai/article/view/133" target="_blank" rel="noopener noreferrer">Open Published Paper</a>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Technical Competencies</h2>
+          <div class="slide-divider"></div>
+          <div class="skills-grid">
+            <div class="card"><h3>Programming</h3><span class="skill-tag">Python</span><span class="skill-tag">C</span><span class="skill-tag">C++</span><span class="skill-tag">JavaScript</span></div>
+            <div class="card"><h3>ML / AI / DL</h3><span class="skill-tag">LLMs</span><span class="skill-tag">RAG</span><span class="skill-tag">CoT</span><span class="skill-tag">NLP</span><span class="skill-tag">SNN</span><span class="skill-tag">Federated Learning</span></div>
+            <div class="card"><h3>Web &amp; Frameworks</h3><span class="skill-tag">React</span><span class="skill-tag">Node.js</span><span class="skill-tag">Bootstrap</span><span class="skill-tag">Firebase</span><span class="skill-tag">REST APIs</span></div>
+            <div class="card"><h3>Databases &amp; Cloud</h3><span class="skill-tag">MySQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">NoSQL</span><span class="skill-tag">Firebase Cloud</span><span class="skill-tag">Heroku</span></div>
+            <div class="card"><h3>Systems &amp; Networks</h3><span class="skill-tag">OS</span><span class="skill-tag">SDN</span><span class="skill-tag">Distributed Systems</span></div>
+            <div class="card"><h3>Data &amp; Research</h3><span class="skill-tag">Data Analysis</span><span class="skill-tag">Technical Writing</span><span class="skill-tag">Visualization</span></div>
+          </div>
+          <p style="color:var(--text-dim); margin-top:16px; font-size:0.9rem;">Professional Experience: 4+ years software engineering</p>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Professional Experience</h2>
+          <div class="slide-divider"></div>
+          <div class="card" style="border-left: 4px solid var(--accent);">
+            <h3>Software Engineer &mdash; Instawebworks Pty Ltd</h3>
+            <p style="color:var(--text-dim); margin-bottom:8px;">Melbourne, Australia (Remote from Bangladesh) &middot; Aug 2022 &ndash; Jul 2023</p>
+            <ul>
+              <li>Converted FIGMA designs into scalable React front-end applications</li>
+              <li>Bug fixing &amp; feature development for production apps</li>
+              <li>Customized ZOHO CRM using Deluge scripting &amp; workflows</li>
+              <li>Built dashboards &amp; widgets for data visualization</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 4px solid var(--accent2);">
+            <h3>Researcher &mdash; HPU, Computer Science &amp; Technology</h3>
+            <p style="color:var(--text-dim); margin-bottom:8px;">2023 &ndash; Present</p>
+            <ul>
+              <li>Published 47 papers across AI, nanotechnology, federated learning, and applied computing</li>
+              <li>150 citations, 3,490 reads on ResearchGate</li>
+            </ul>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Key Research Outputs</h2>
+          <div class="slide-divider"></div>
+          <div class="research-evidence-grid">
+            <div>
+              <div class="stat-row" style="margin-bottom:0;">
+                <div class="stat-pill"><div class="num">47</div><div class="label">Publications</div></div>
+                <div class="stat-pill"><div class="num">150</div><div class="label">Citations</div></div>
+                <div class="stat-pill"><div class="num">3,490</div><div class="label">ResearchGate Reads</div></div>
+              </div>
+              <table class="pub-table">
+                <tr><th>Title</th><th>Venue</th><th>Year</th></tr>
+                <tr><td>Agentic Commerce: Multi-Retrieval for E-Commerce Chatbots</td><td style="color:var(--accent)">JCSAI</td><td>2026</td></tr>
+                <tr><td>Shape-Dependent Force Constants in TiO<sub>2</sub> Nanocrystals</td><td style="color:var(--accent)">Chem. Commun.</td><td>2025</td></tr>
+                <tr><td>QoS-Diff: Adaptive Auto-Tuning for Diffusion Model Inference</td><td style="color:var(--accent)">Conference</td><td>2024</td></tr>
+                <tr><td>Performance Evaluation of Micro Lens Arrays for W-OLEDs</td><td style="color:var(--gold)">PLOS ONE</td><td>2022</td></tr>
+                <tr><td>Federated Learning with SNNs in Heterogeneous Systems</td><td style="color:var(--accent)">Conference</td><td>2023</td></tr>
+              </table>
+              <p style="color:var(--text-dim); font-size:0.78rem; margin-top:10px;">Co-authors: Siddharth Advani, Dr. M.A. Hamid, Prof. Vijaykrishnan Narayanan, and others</p>
+            </div>
+            <div class="evidence-card">
+              <a class="shot-link research-shot" href="https://www.researchgate.net/profile/Md-Faysal-18" target="_blank" rel="noopener noreferrer" aria-label="Open ResearchGate profile in a new tab">
+                <img class="browser-shot" src="assets/researchgate-profile.png" alt="Screenshot of Md Estihad Faysal ResearchGate profile">
+              </a>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Awards, Honors &amp; References</h2>
+          <div class="slide-divider"></div>
+          <div class="awards-culture-grid">
+            <div class="culture-photo-card">
+              <img class="culture-photo" src="assets/cultural-gastronomic-exhibition.jpg" alt="Md Estihad Faysal at the Cultural and Gastronomic Exhibition with Henan Polytechnic University group">
+              <div class="culture-caption">
+                <strong>1st Place — Cultural &amp; Gastronomic Exhibition</strong>
+                <span>Represented Bangladesh through cuisine and cultural exchange at the 2nd Henan Provincial International Cultural Festival for Chinese and foreign teachers and students.</span>
+              </div>
+            </div>
+            <div class="awards-stack">
+              <div class="card">
+                <h3>Scholarships &amp; Awards</h3>
+                <ul>
+                  <li>Henan Provincial Scholarship — 2018</li>
+                  <li>Henan Provincial Scholarship — 2019</li>
+                  <li>Excellent Member Award — Chinese Bridge Program</li>
+                  <li>Henan Provincial Scholarship — 2023–2025 (Master's)</li>
+                  <li style="color:var(--gold);">Cultural &amp; Gastronomic Exhibition — 1st Place</li>
+                </ul>
+              </div>
+              <div class="card">
+                <h3>Academic References</h3>
+                <p style="margin-bottom:12px;"><b style="color:var(--accent)">Prof. Bibu Lu</b><br><span style="color:var(--text-dim)">Dept. of Computer Science &amp; Technology, HPU</span><br>lubibo@hpu.edu.cn &middot; (+86) 13939102824</p>
+                <p><b style="color:var(--accent)">Prof. Su Baishun</b><br><span style="color:var(--text-dim)">Dept. of Computer Science &amp; Technology, HPU</span><br>subaishun@hpu.edu.cn &middot; (+86) 13639626216</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Bridging AI &amp; Geospatial Intelligence</h2>
+          <div class="slide-divider"></div>
+          <div class="arch-block" style="gap:20px;">
+            <div class="arch-row">
+              <div class="arch-box blue" style="font-size:1.1rem;">Multiagentic AI<br><small>(Master's Core)</small></div>
+              <div style="font-size:2rem; color:var(--accent); display:flex; align-items:center;">&rarr;</div>
+              <div class="arch-box purple" style="font-size:1.1rem;">Remote Sensing<br><small>&amp; GIS (PhD)</small></div>
+            </div>
+            <div class="arch-layer" style="border-color: var(--accent); color: var(--accent); font-size:0.9rem; max-width:100%;">Convergent Capabilities</div>
+            <div class="arch-row">
+              <div class="arch-box blue">Agent A<br><small>Satellite Image Analysis</small></div>
+              <div class="arch-box purple">Agent B<br><small>Flood Risk Modeling</small></div>
+              <div class="arch-box pink">Agent C<br><small>Alert &amp; Evacuation Routing</small></div>
+            </div>
+            <div class="arch-box gold">Supervisor Agent &mdash; Orchestration &amp; Decision</div>
+            <div class="arch-layer" style="border-color: var(--accent2); color: var(--accent2);">Shared: RAG &middot; CoT Reasoning &middot; Cloud Deployment</div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Problem Statement</h2>
+          <div class="slide-divider"></div>
+          <div class="research-problem-visual">
+            <img src="assets/problem-solution-flood-response.png" alt="Split visual showing flash-flood problem and AI-enabled flood response solution">
+            <div class="visual-pill problem">
+              <strong>Problem</strong>
+              Flash floods in Feni and similar developing regions arrive faster than manual warning systems can react.
+            </div>
+            <div class="visual-pill solution">
+              <strong>Need</strong>
+              Satellite-informed, GIS-based AI must convert risk detection into forecasts, routes, and alerts before water reaches communities.
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section" style="max-width:100%;">
+          <h2>Proposed Solution &amp; Research Target</h2>
+          <div class="slide-divider"></div>
+          <div class="solution-target-grid">
+            <div class="architecture-card">
+              <img src="assets/agentic-gis-flood-architecture.png" alt="Agentic AI multiagent system architecture for GIS-based flood evacuation and response">
+            </div>
+            <div class="target-panel">
+              <h3>Research Target</h3>
+              <div class="target-metric-grid">
+                <div class="target-metric">
+                  <strong>Feni, Bangladesh</strong>
+                  <span>Case-study region for data-sparse flash-flood risk, evacuation routing, and local response coordination.</span>
+                </div>
+                <div class="target-metric">
+                  <strong>Sub-6-hour forecasts</strong>
+                  <span>Fuse Sentinel-1/2, river gauges, rainfall forecasts, DEM, road networks, and vulnerability data.</span>
+                </div>
+                <div class="target-metric">
+                  <strong>Zero-click evacuation</strong>
+                  <span>Automatically translate forecasted risk into safe routes, shelter allocation, responder tasks, and SMS/app alerts.</span>
+                </div>
+                <div class="target-metric">
+                  <strong>Edge-cloud resilience</strong>
+                  <span>Keep forecasts and alerts operational when disaster conditions weaken network connectivity.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Research Innovation</h2>
+          <div class="slide-divider"></div>
+          <div class="innovation-lead">
+            <b>Core idea:</b> move flood response from passive dashboards to an autonomous multi-agent GIS system that senses, reasons, routes, alerts, and learns from field feedback.
+          </div>
+          <div class="innovation-grid">
+            <div class="innovation-panel">
+              <h3>Multi-Agent Orchestration</h3>
+              <p>Specialized agents coordinate remote sensing, hydrology forecasting, GIS analysis, evacuation routing, alerting, and resource allocation.</p>
+            </div>
+            <div class="innovation-panel">
+              <h3>GIS-Aware Reasoning</h3>
+              <p>Forecasts are grounded in spatial layers: flood extent, land cover, elevation, roads, shelters, population exposure, and vulnerability.</p>
+            </div>
+            <div class="innovation-panel">
+              <h3>Forecast-to-Action Pipeline</h3>
+              <p>The system converts flood prediction into operational outputs: safe routes, shelter assignment, responder tasking, and emergency alerts.</p>
+            </div>
+            <div class="innovation-panel">
+              <h3>Edge-Cloud Deployment</h3>
+              <p>Cloud intelligence is paired with local edge services so emergency decisions remain available during unstable connectivity.</p>
+            </div>
+            <div class="innovation-panel">
+              <h3>Feedback Loop</h3>
+              <p>Field reports, updated sensor data, and community feedback continuously refine risk maps and response decisions.</p>
+            </div>
+            <div class="innovation-panel">
+              <h3>Measurable Impact</h3>
+              <p>Target outcome: faster warnings, lower evacuation delay, and a replicable framework for flood-prone developing regions.</p>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Research Timeline (3–4 Years)</h2>
+          <div class="slide-divider"></div>
+          <div class="year-grid">
+            <div class="card" style="border-left: 4px solid var(--accent);">
+              <h3>Year 1 — Foundation &amp; Data Infrastructure</h3>
+              <ul>
+                <li>Complete required PhD coursework</li>
+                <li>Comprehensive literature review: multi-agent AI, flood hydrology, remote sensing</li>
+                <li>Build Sentinel-1/2 data acquisition pipelines (Copernicus, Google Earth Engine)</li>
+                <li>Collect &amp; preprocess historical flood datasets (Feni 2024, Sylhet 2022, Kerala 2018)</li>
+                <li>Publish 1–2 survey/review papers</li>
+              </ul>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--accent2);">
+              <h3>Year 2 — Core System Development</h3>
+              <ul>
+                <li>Design &amp; implement multi-agent coordination architecture</li>
+                <li>Develop satellite image analysis agent (SAR water segmentation, optical NDWI)</li>
+                <li>Build flood risk prediction model (LSTM / Transformer + topographic features)</li>
+                <li>Prototype evacuation routing agent &middot; Submit 1 journal paper</li>
+              </ul>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--accent3);">
+              <h3>Year 3 — Validation &amp; Field Deployment</h3>
+              <ul>
+                <li>Case study: Feni, Bangladesh — ground-truth validation</li>
+                <li>System optimization: latency, accuracy, uptime</li>
+                <li>Edge-cloud deployment &amp; failover testing &middot; Submit 1–2 journal papers</li>
+              </ul>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--gold);">
+              <h3>Year 4 — Dissertation &amp; Dissemination</h3>
+              <ul><li>Complete dissertation &middot; Open-source the framework &amp; datasets &middot; Prepare for defense</li></ul>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Expected Contributions</h2>
+          <div class="slide-divider"></div>
+          <ul class="contrib-list">
+            <li><span class="contrib-num">1</span><p>A validated multi-agent AI framework for satellite-driven flash-flood forecasting</p></li>
+            <li><span class="contrib-num">2</span><p><b style="color:var(--accent);">&ge;40% reduction</b> in evacuation time compared to current manual early-warning systems</p></li>
+            <li><span class="contrib-num">3</span><p>Open-source datasets: preprocessed Sentinel imagery + flood labels for South Asian rivers</p></li>
+            <li><span class="contrib-num">4</span><p>Zero-click evacuation protocol design replicable across developing regions</p></li>
+            <li><span class="contrib-num">5</span><p>Edge-cloud hybrid deployment blueprint for disaster-resilient AI systems</p></li>
+            <li><span class="contrib-num">6</span><p>4–6 journal publications (target: IEEE TGRS, ISPRS, Remote Sensing, etc.)</p></li>
+          </ul>
+          <p style="color:var(--accent2); font-size:0.9rem; margin-top:16px; text-align:center;">Broader Impact: Accessible, intelligent disaster-resilient systems for the Global South</p>
+        </div>
+      `
+    },
+    {
+      type: 'section',
+      html: `
+        <div class="slide-inner slide-section">
+          <h2>Why HPU for This Research?</h2>
+          <div class="slide-divider"></div>
+          <div class="closing-reasons">
+            <div class="reason-item"><div class="icon">&#127891;</div><p>8 years at HPU with deep institutional knowledge</p></div>
+            <div class="reason-item"><div class="icon">&#129309;</div><p>Established relationships with faculty &amp; research infrastructure</p></div>
+            <div class="reason-item"><div class="icon">&#128161;</div><p>HPU's commitment to interdisciplinary innovation</p></div>
+            <div class="reason-item"><div class="icon">&#127759;</div><p>China's leadership in AI &amp; satellite remote sensing (BeiDou, Gaofen, CBERS)</p></div>
+          </div>
+          <div style="text-align:center; margin-top:40px;">
+            <h2 style="font-size:2rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Thank You — &#35874;&#35874;</h2>
+            <p style="color:var(--text-dim); margin-top:12px; font-size:1.1rem;">I welcome your questions.</p>
+            <div style="margin-top:24px; padding:20px; background:var(--card-bg); border-radius:12px; border:1px solid var(--border); display:inline-block;">
+              <p style="color:var(--accent);">Md Estihad Faysal</p>
+              <p style="color:var(--text-dim); font-size:0.9rem;">aihe1524@gmail.com &middot; WeChat: aihe_ &middot; (+86) 17539175901</p>
+            </div>
+          </div>
+        </div>
+      `
+    }
+  ];
+
+  function slideIndexFromHash() {
+    const parsed = Number.parseInt(window.location.hash.replace('#', ''), 10);
+    if (Number.isFinite(parsed)) {
+      return Math.max(0, Math.min(parsed - 1, SLIDES.length - 1));
+    }
+    return 0;
+  }
+
+  let currentSlide = slideIndexFromHash();
+  let direction = 1;
+  const container = document.getElementById('slidesContainer');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const counter = document.getElementById('slideCounter');
+  const footerCounter = document.getElementById('footerCounter');
+  const progressBar = document.getElementById('progressBar');
+  const thumbRail = document.getElementById('thumbRail');
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+  }
+
+  function cleanText(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function getSlideMeta(slide, index) {
+    const template = document.createElement('template');
+    template.innerHTML = slide.html.trim();
+
+    const titleEl = template.content.querySelector('h1, h2, h3');
+    const subtitleEl = template.content.querySelector('.subtitle');
+    const title = cleanText(titleEl ? titleEl.textContent : `Slide ${index + 1}`);
+    const kicker = index === 0
+      ? cleanText(subtitleEl ? subtitleEl.textContent : 'Opening')
+      : `Slide ${index + 1}`;
+
+    return { title, kicker };
+  }
+
+  function renderSlides() {
+    container.innerHTML = '';
+    thumbRail.innerHTML = '';
+    SLIDES.forEach((slide, i) => {
+      const div = document.createElement('div');
+      div.className = 'slide';
+      div.dataset.page = `${i + 1} / ${SLIDES.length}`;
+      div.innerHTML = slide.html;
+      container.appendChild(div);
+
+      const meta = getSlideMeta(slide, i);
+      const thumb = document.createElement('button');
+      thumb.type = 'button';
+      thumb.className = 'thumb-item';
+      thumb.setAttribute('aria-label', `Go to slide ${i + 1}: ${meta.title}`);
+      thumb.innerHTML = `
+        <span class="thumb-index">${i + 1}</span>
+        <span class="thumb-preview">
+          <span>
+            <span class="thumb-kicker">${escapeHTML(meta.kicker)}</span>
+            <span class="thumb-title">${escapeHTML(meta.title)}</span>
+          </span>
+          <span class="thumb-lines" aria-hidden="true">
+            <span class="thumb-line"></span>
+            <span class="thumb-line"></span>
+            <span class="thumb-line"></span>
+          </span>
+        </span>
+      `;
+      thumb.addEventListener('click', () => goToSlide(i));
+      thumbRail.appendChild(thumb);
+    });
+  }
+
+  function updateSlide(dir) {
+    const slides = container.querySelectorAll('.slide');
+    const thumbs = thumbRail.querySelectorAll('.thumb-item');
+
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'exit-left', 'exit-right');
+      if (i === currentSlide) {
+        s.classList.add('active');
+      } else if (i < currentSlide) {
+        s.classList.add('exit-left');
+      } else {
+        s.classList.add('exit-right');
+      }
+    });
+
+    thumbs.forEach((thumb, i) => {
+      const isActive = i === currentSlide;
+      thumb.classList.toggle('active', isActive);
+      thumb.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+
+    const activeThumb = thumbs[currentSlide];
+    if (activeThumb) {
+      activeThumb.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+
+    counter.textContent = `${currentSlide + 1} / ${SLIDES.length}`;
+    footerCounter.textContent = `${currentSlide + 1} / ${SLIDES.length}`;
+    progressBar.style.transform = `scaleX(${(currentSlide + 1) / SLIDES.length})`;
+
+    const desiredHash = `#${currentSlide + 1}`;
+    if (window.location.hash !== desiredHash) {
+      history.replaceState(null, '', desiredHash);
+    }
+
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === SLIDES.length - 1;
+  }
+
+  function goToSlide(index) {
+    direction = index > currentSlide ? 1 : -1;
+    currentSlide = Math.max(0, Math.min(index, SLIDES.length - 1));
+    updateSlide(direction);
+  }
+
+  function nextSlide() { goToSlide(currentSlide + 1); }
+  function prevSlide() { goToSlide(currentSlide - 1); }
+
+  renderSlides();
+  updateSlide(1);
+
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+
+  window.addEventListener('hashchange', () => {
+    const target = slideIndexFromHash();
+    if (target !== currentSlide) {
+      goToSlide(target);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      nextSlide();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      prevSlide();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goToSlide(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goToSlide(SLIDES.length - 1);
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  container.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  container.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 60) {
+      diff > 0 ? nextSlide() : prevSlide();
+    }
+  });
+
+  // Mouse wheel
+  let wheelTimeout;
+  container.addEventListener('wheel', (e) => {
+    if (wheelTimeout) return;
+    wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 800);
+    if (e.deltaY > 0 || e.deltaX > 0) nextSlide();
+    else if (e.deltaY < 0 || e.deltaX < 0) prevSlide();
+  }, { passive: true });
+
+})();
+</script>
+</body>
+</html>
